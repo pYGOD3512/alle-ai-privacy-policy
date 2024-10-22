@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -13,21 +13,27 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "",
-};
-
 export default function RootLayout({
   children,
-}: Readonly<{
+  title,
+  description,
+}: {
   children: React.ReactNode;
-}>) {
+  title?: string;
+  description?: string;
+}) {
+  const metadata: Metadata = {
+    title,
+    description,
+  };
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <title>{String(metadata.title || "Alle-AI")}</title>
+        <meta name="description" content={metadata.description || "Policy Home."} />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
